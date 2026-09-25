@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sprint Garden — Kanban</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌸</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ===== Lock screen ===== -->
+<div id="lock-screen" class="lock-screen">
+  <div class="lock-card">
+    <div class="lock-bloom" aria-hidden="true">
+      <svg viewBox="0 0 120 120" width="52" height="52">
+        <circle cx="60" cy="60" r="10" fill="var(--rose-500)"/>
+        <g fill="var(--rose-300)" opacity="0.85">
+          <ellipse cx="60" cy="34" rx="12" ry="22"/>
+          <ellipse cx="60" cy="86" rx="12" ry="22"/>
+          <ellipse cx="34" cy="60" rx="22" ry="12"/>
+          <ellipse cx="86" cy="60" rx="22" ry="12"/>
+        </g>
+      </svg>
+    </div>
+    <h1>Sprint Garden</h1>
+    <p class="lock-copy">This board is just for you. Enter your passphrase to open it.</p>
+    <form id="lock-form" autocomplete="off">
+      <input id="lock-input" type="password" placeholder="Passphrase" autocomplete="off" />
+      <button type="submit">Unlock</button>
+    </form>
+    <p id="lock-error" class="lock-error" hidden>That's not it — try again.</p>
+    <p class="lock-note">Note: this is a soft lock for a personal, unlisted page — see the README before treating it as real security.</p>
+  </div>
+</div>
+
+<!-- ===== App ===== -->
+<div id="app" class="app" hidden>
+
+  <header class="topbar">
+    <div class="brand">
+      <svg class="brand-flourish" viewBox="0 0 140 36" width="70" height="18" aria-hidden="true">
+        <path d="M2 30 C 30 6, 55 30, 70 14 S 112 2, 138 16" fill="none" stroke="var(--rose-400)" stroke-width="2" stroke-linecap="round"/>
+        <circle cx="20" cy="19" r="2.4" fill="var(--rose-300)"/>
+        <circle cx="88" cy="12" r="2.4" fill="var(--lav-300)"/>
+        <circle cx="120" cy="17" r="2.4" fill="var(--rose-300)"/>
+      </svg>
+      <h1>Sprint Garden</h1>
+    </div>
+
+    <div class="sprint-meta">
+      <input id="sprint-name" class="sprint-name-input" value="Sprint 1" spellcheck="false" />
+      <div class="sprint-dates">
+        <input id="sprint-start" type="date" />
+        <span class="dash">–</span>
+        <input id="sprint-end" type="date" />
+      </div>
+    </div>
+
+    <div class="topbar-actions">
+      <button id="lock-btn" class="icon-btn" title="Lock board" aria-label="Lock board">🔒</button>
+      <button id="new-task-btn" class="btn-primary">+ New task</button>
+    </div>
+  </header>
+
+  <div class="progress-strip">
+    <div class="progress-track">
+      <div id="progress-fill" class="progress-fill"></div>
+    </div>
+    <span id="progress-label" class="progress-label">0 of 0 done</span>
+  </div>
+
+  <main id="board" class="board"></main>
+
+  <template id="column-template">
+    <section class="column" data-column="">
+      <div class="column-head">
+        <span class="column-dot"></span>
+        <h2 class="column-title"></h2>
+        <span class="column-count">0</span>
+      </div>
+      <div class="card-list" data-dropzone></div>
+      <button class="add-inline">+ Add task</button>
+    </section>
+  </template>
+
+  <template id="card-template">
+    <article class="card" draggable="true" tabindex="0">
+      <div class="card-top">
+        <span class="priority-dot"></span>
+        <span class="card-title"></span>
+      </div>
+      <p class="card-desc"></p>
+      <div class="card-footer">
+        <span class="card-due"></span>
+        <div class="card-actions">
+          <button class="card-edit" aria-label="Edit task">✎</button>
+          <button class="card-delete" aria-label="Delete task">✕</button>
+        </div>
+      </div>
+    </article>
+  </template>
+</div>
+
+<!-- ===== Task modal ===== -->
+<div id="modal-backdrop" class="modal-backdrop" hidden>
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <h2 id="modal-title">New task</h2>
+    <form id="task-form">
+      <label>
+        Title
+        <input id="field-title" type="text" required maxlength="80" placeholder="e.g. Wire up auth endpoint" />
+      </label>
+      <label>
+        Description
+        <textarea id="field-desc" rows="3" maxlength="400" placeholder="Optional detail..."></textarea>
+      </label>
+      <div class="field-row">
+        <label>
+          Priority
+          <select id="field-priority">
+            <option value="low">Low</option>
+            <option value="medium" selected>Medium</option>
+            <option value="high">High</option>
+          </select>
+        </label>
+        <label>
+          Column
+          <select id="field-column"></select>
+        </label>
+        <label>
+          Due date
+          <input id="field-due" type="date" />
+        </label>
+      </div>
+      <div class="modal-actions">
+        <button type="button" id="modal-cancel" class="btn-ghost">Cancel</button>
+        <button type="submit" class="btn-primary">Save task</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
