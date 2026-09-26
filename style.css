@@ -326,6 +326,8 @@ input, textarea, select { font-family: var(--font-body); }
   box-shadow: var(--shadow-glow);
 }
 
+.modal-backdrop[hidden] { display: none; }
+
 .modal h2 { font-size: 1.2rem; font-weight: 500; margin-bottom: 16px; color: var(--rose-300); }
 
 #task-form { display: flex; flex-direction: column; gap: 14px; }
