@@ -62,9 +62,11 @@
 
     <div class="topbar-actions">
       <button id="lock-btn" class="icon-btn" title="Lock board" aria-label="Lock board">🔒</button>
-      <button id="new-task-btn" class="btn-primary">+ New task</button>
+      <a id="new-task-btn" class="btn-primary" href="task.html">+ New task</a>
     </div>
   </header>
+
+  <div class="project-strip" id="project-strip"></div>
 
   <div class="progress-strip">
     <div class="progress-track">
@@ -83,7 +85,7 @@
         <span class="column-count">0</span>
       </div>
       <div class="card-list" data-dropzone></div>
-      <button class="add-inline">+ Add task</button>
+      <a class="add-inline" href="task.html">+ Add task</a>
     </section>
   </template>
 
@@ -95,9 +97,12 @@
       </div>
       <p class="card-desc"></p>
       <div class="card-footer">
-        <span class="card-due"></span>
+        <div class="card-meta">
+          <span class="card-project"></span>
+          <span class="card-due"></span>
+        </div>
         <div class="card-actions">
-          <button class="card-edit" aria-label="Edit task">✎</button>
+          <a class="card-edit" href="task.html" aria-label="Edit task">✎</a>
           <button class="card-delete" aria-label="Delete task">✕</button>
         </div>
       </div>
@@ -105,51 +110,7 @@
   </template>
 </div>
 
-<!-- ===== Task modal ===== -->
-<div id="modal-backdrop" class="modal-backdrop" hidden>
-  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
-    <h2 id="modal-title">New task</h2>
-    <form id="task-form">
-      <label>
-        Title
-        <input id="field-title" type="text" required maxlength="80" placeholder="e.g. Wire up auth endpoint" />
-      </label>
-      <label>
-        Description
-        <textarea id="field-desc" rows="3" maxlength="400" placeholder="Optional detail..."></textarea>
-      </label>
-      <div class="field-row">
-        <label>
-          Priority
-          <select id="field-priority">
-            <option value="low">Low</option>
-            <option value="medium" selected>Medium</option>
-            <option value="high">High</option>
-          </select>
-        </label>
-        <label>
-          Column
-          <select id="field-column">
-            <option value="backlog">Backlog</option>
-            <option value="todo">To Do</option>
-            <option value="in-progress">In Progress</option>
-            <option value="review">In Review</option>
-            <option value="done">Done</option>
-          </select>
-        </label>
-        <label>
-          Due date
-          <input id="field-due" type="date" />
-        </label>
-      </div>
-      <div class="modal-actions">
-        <button type="button" id="modal-cancel" class="btn-ghost">Cancel</button>
-        <button type="submit" class="btn-primary">Save task</button>
-      </div>
-    </form>
-  </div>
-</div>
-
-<script src="app.js"></script>
+<script src="shared.js"></script>
+<script src="board.js"></script>
 </body>
 </html>
