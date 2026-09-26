@@ -6,7 +6,14 @@
 const STORAGE_KEY = "sprintGarden.board.v1";
 const SESSION_KEY = "sprintGarden.unlocked";
 
-const PASS_HASH = "2c3d40381458969b41ea719126fa52ed1ee98a16857c120e92ecb0afa8731d10";
+// ---- 1. Set your passphrase here ----------------------------------------
+// This is a SHA-256 hash, not the plain text, so casual viewers of the
+// source can't just read your passphrase off the page.
+// To set your own: open browser devtools console on any page and run
+//   crypto.subtle.digest("SHA-256", new TextEncoder().encode("your phrase"))
+//     .then(b => console.log([...new Uint8Array(b)].map(x => x.toString(16).padStart(2,"0")).join("")))
+// then paste the result below. Default passphrase is: "bloom"
+const PASS_HASH = "34659fd61a72a85204b4f191879ba9064fcb4112618e0fc6c51112cfd555b0d9";
 
 const COLUMNS = [
   { id: "backlog", title: "Backlog", dot: "var(--text-faint)" },
@@ -55,6 +62,10 @@ function saveState() {
   } catch (e) { console.error("Could not save board.", e); }
 }
 
+// initialized must be declared before the lock screen section below, since
+// an already-unlocked visit calls initApp() immediately during page load.
+let initialized = false;
+
 // ---- Lock screen ----------------------------------------------------------
 const lockScreen = document.getElementById("lock-screen");
 const lockForm = document.getElementById("lock-form");
@@ -97,7 +108,6 @@ document.getElementById("lock-btn")?.addEventListener("click", () => {
 });
 
 // ---- App init (only runs after unlock) ------------------------------------
-let initialized = false;
 
 function initApp() {
   if (initialized) return;
