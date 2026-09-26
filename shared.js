@@ -7,9 +7,7 @@
 const STORAGE_KEY = "sprintGarden.board.v1";
 const SESSION_KEY = "sprintGarden.unlocked";
 
-// Set your own passphrase's SHA-256 hash here. See README for how to
-// generate one. Default passphrase is: "bloom"
-const PASS_HASH = "34659fd61a72a85204b4f191879ba9064fcb4112618e0fc6c51112cfd555b0d9";
+const PASS_HASH = "f6f7e983afc59354c91673d637c22072ec68f710794f899ae7472dff7b7508e4";
 
 const COLUMNS = [
   { id: "backlog", title: "Backlog", dot: "var(--text-faint)" },
