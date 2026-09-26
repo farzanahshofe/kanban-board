@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>New task — Sprint Garden</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌸</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="task-page">
+  <div class="task-page-card">
+    <a href="index.html" class="back-link">← Back to board</a>
+    <h1 id="page-title">New task</h1>
+
+    <form id="task-form">
+      <label>
+        Title
+        <input id="field-title" type="text" required maxlength="80" placeholder="e.g. Wire up auth endpoint" />
+      </label>
+      <label>
+        Description
+        <textarea id="field-desc" rows="4" maxlength="400" placeholder="Optional detail..."></textarea>
+      </label>
+
+      <div class="field-row">
+        <label>
+          Project
+          <select id="field-project"></select>
+        </label>
+        <label>
+          Priority
+          <select id="field-priority">
+            <option value="low">Low</option>
+            <option value="medium" selected>Medium</option>
+            <option value="high">High</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="field-row">
+        <label>
+          Column
+          <select id="field-column">
+            <option value="backlog">Backlog</option>
+            <option value="todo">To Do</option>
+            <option value="in-progress">In Progress</option>
+            <option value="review">In Review</option>
+            <option value="done">Done</option>
+          </select>
+        </label>
+        <label>
+          Due date
+          <input id="field-due" type="date" />
+        </label>
+      </div>
+
+      <div class="task-page-actions">
+        <a href="index.html" class="btn-ghost">Cancel</a>
+        <button type="submit" class="btn-primary" id="save-btn">Save task</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script src="shared.js"></script>
+<script src="task.js"></script>
+</body>
+</html>
